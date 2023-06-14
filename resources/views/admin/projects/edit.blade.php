@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="container">
-        <form action="{{ route('admin.projects.update', $project->slug) }}" method="ptoject" enctype="multipart/form-data">
+        <form action="{{ route('admin.projects.update', $project->slug) }}" method="POST" enctype="multipart/form-data">
             @method('PUT')
             @csrf
 

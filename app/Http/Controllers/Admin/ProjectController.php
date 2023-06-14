@@ -79,8 +79,8 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        $technologies = Technology::all();
         $types = Type::all();
+        $technologies = Technology::all();
         return view('admin.projects.edit', compact('project', 'types', 'technologies'));
     }
 
@@ -110,7 +110,7 @@ class ProjectController extends Controller
         } else {
             $project->technologies()->detach($request->technologies);
         }
-        return redirect()->route('admin.projects.index', $project->slug)->with('message', "{$project->title} è stato modificato correttamente");
+        return redirect()->route('admin.projects.index')->with('message', "{$project->title} è stato modificato correttamente");
     }
 
     /**
