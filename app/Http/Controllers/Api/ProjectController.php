@@ -10,11 +10,18 @@ class ProjectController extends Controller
 {
     public function index(Request $request)
     {
+        $query = Project::with(['type', 'technologies']);
         if ($request->has('type_id')) {
-            $projects = Project::with(['type', 'technologies'])->where('type_id', $request->type_id)->paginate(20);
-        } else {
-            $projects = Project::with(['type', 'technologies'])->paginate(20);
+            $query->where('type_id', $request->type_id);
         }
+
+        if ($request->has('technology_id')) {
+            $query->whereHas('technologies', function ($q) use ($request) {
+                $q->whereIn('id', [$request->technology_id]);
+            });
+        }
+
+        $projects = $query->paginate(20);
 
         return response()->json([
             'success' => true,
